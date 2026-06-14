@@ -8,6 +8,7 @@ const navItems = [
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
   { label: "Contact", href: "#contact" },
+  { label: "Knowledge Base", href: "https://knowledge-base.worldofnoki.com", external: true },
 ];
 
 export default function Navbar() {
@@ -39,6 +40,7 @@ export default function Navbar() {
             <a
               key={item.label}
               href={item.href}
+              {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="text-gray-400 hover:text-white transition-colors duration-200 text-sm font-medium"
             >
               {item.label}
