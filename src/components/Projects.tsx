@@ -22,32 +22,33 @@ const featuredProjects = [
   },
 ];
 
-const otherProjects = [
-  {
-    title: "MTR Arrival Time Bot",
-    description: "Telegram bot showing real-time Hong Kong MTR arrival times.",
-    tags: ["Bot", "API", "Python"],
-    github: "https://github.com/Nokijai/mtr_arrivaltime_bot",
-  },
-  {
-    title: "CU Course Planner",
-    description: "Course planning tool for CUHK students.",
-    tags: ["Web App", "Education"],
-    github: "https://github.com/Nokijai/CU_Course_Planner",
-  },
-  {
-    title: "Real-Time Editor",
-    description: "Collaborative real-time code/text editor.",
-    tags: ["WebSocket", "Collaboration"],
-    github: "https://github.com/Nokijai/real_time_editor",
-  },
-  {
-    title: "GAN Human Image Generation",
-    description: "Generative adversarial network for human image synthesis.",
-    tags: ["Deep Learning", "GAN", "Computer Vision"],
-    github: "https://github.com/Nokijai/GAN_human_image_generation",
-  },
-];
+// Temporarily hidden — other notable projects
+// const otherProjects = [
+//   {
+//     title: "MTR Arrival Time Bot",
+//     description: "Telegram bot showing real-time Hong Kong MTR arrival times.",
+//     tags: ["Bot", "API", "Python"],
+//     github: "https://github.com/Nokijai/mtr_arrivaltime_bot",
+//   },
+//   {
+//     title: "CU Course Planner",
+//     description: "Course planning tool for CUHK students.",
+//     tags: ["Web App", "Education"],
+//     github: "https://github.com/Nokijai/CU_Course_Planner",
+//   },
+//   {
+//     title: "Real-Time Editor",
+//     description: "Collaborative real-time code/text editor.",
+//     tags: ["WebSocket", "Collaboration"],
+//     github: "https://github.com/Nokijai/real_time_editor",
+//   },
+//   {
+//     title: "GAN Human Image Generation",
+//     description: "Generative adversarial network for human image synthesis.",
+//     tags: ["Deep Learning", "GAN", "Computer Vision"],
+//     github: "https://github.com/Nokijai/GAN_human_image_generation",
+//   },
+// ];
 
 function ProjectCard({
   project,
@@ -148,8 +149,8 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Other projects */}
-        <motion.h3
+        {/* Other projects — hidden while otherProjects is commented out */}
+        {/* <motion.h3
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.4 }}
@@ -161,7 +162,7 @@ export default function Projects() {
           {otherProjects.map((project, i) => (
             <ProjectCard key={project.title} project={project} index={i + 2} />
           ))}
-        </div>
+        </div> */}
 
         {/* View all on GitHub */}
         <motion.div

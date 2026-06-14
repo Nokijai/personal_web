@@ -6,11 +6,11 @@ import { useRef } from "react";
 const skillCategories = [
   {
     title: "Languages",
-    skills: ["Python", "TypeScript", "C++", "Java", "Rust", "SQL"],
+    skills: ["Python", "TypeScript", "C/C++", "Java", "Rust", "SQL", "R"],
   },
   {
     title: "AI / ML",
-    skills: ["PyTorch", "TensorFlow", "Scikit-learn", "LLMs", "GANs", "NLP"],
+    skills: ["PyTorch", "TensorFlow", "Scikit-learn", "LLMs", "GANs", "NLP", "Dify", "LangChain", "n8n" ],
   },
   {
     title: "Quantitative",
