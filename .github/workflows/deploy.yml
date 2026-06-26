@@ -52,7 +52,7 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           SENTRY_DSN_PW: ${{ secrets.SENTRY_DSN_PW }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          NEXT_AXIOM_TOKEN: ${{ secrets.NEXT_AXIOM_TOKEN }}
+          NEXT_PUBLIC_AXIOM_TOKEN: ${{ secrets.NEXT_PUBLIC_AXIOM_TOKEN }}
         run: |
           OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
@@ -63,7 +63,7 @@ jobs:
             LLM_API_KEY="$LLM_API_KEY" \
             SENTRY_DSN_PW="$SENTRY_DSN_PW" \
             SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN" \
-            NEXT_AXIOM_TOKEN="$NEXT_AXIOM_TOKEN" \
+            NEXT_PUBLIC_AXIOM_TOKEN="$NEXT_PUBLIC_AXIOM_TOKEN" \
             bash -s << 'ENDSSH'
           set -ex
           echo "$GHCR_TOKEN" | docker login ghcr.io -u "$OWNER" --password-stdin
@@ -89,8 +89,8 @@ jobs:
             -e SENTRY_DSN="$SENTRY_DSN_PW" \
             -e NEXT_PUBLIC_SENTRY_DSN="$SENTRY_DSN_PW" \
             -e SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN" \
-            -e NEXT_AXIOM_TOKEN="$NEXT_AXIOM_TOKEN" \
-            -e NEXT_AXIOM_DATASET="personal-web" \
+            -e NEXT_PUBLIC_AXIOM_TOKEN="$NEXT_PUBLIC_AXIOM_TOKEN" \
+            -e NEXT_PUBLIC_AXIOM_DATASET="personal-web" \
             ghcr.io/$OWNER/personal_web:latest
           docker image prune -f
           sleep 3
