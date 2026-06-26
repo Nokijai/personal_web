@@ -1,0 +1,96 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set lowercase owner
+        run: echo "OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ env.OWNER }}/personal_web:latest
+            ghcr.io/${{ env.OWNER }}/personal_web:${{ github.sha }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DO_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -t ed25519 ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Deploy to DigitalOcean
+        env:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          SENTRY_DSN_PW: ${{ secrets.SENTRY_DSN_PW }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          NEXT_AXIOM_TOKEN: ${{ secrets.NEXT_AXIOM_TOKEN }}
+        run: |
+          OWNER=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=10 \
+            ${{ secrets.DO_USERNAME }}@${{ secrets.DO_HOST }} \
+            GHCR_TOKEN="$GHCR_TOKEN" \
+            OWNER="$OWNER" \
+            LLM_API_KEY="$LLM_API_KEY" \
+            SENTRY_DSN_PW="$SENTRY_DSN_PW" \
+            SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN" \
+            NEXT_AXIOM_TOKEN="$NEXT_AXIOM_TOKEN" \
+            bash -s << 'ENDSSH'
+          set -ex
+          echo "$GHCR_TOKEN" | docker login ghcr.io -u "$OWNER" --password-stdin
+          docker pull ghcr.io/$OWNER/personal_web:latest
+          docker stop personal-web 2>/dev/null || true
+          docker rm personal-web 2>/dev/null || true
+          fuser -k 3000/tcp 2>/dev/null || true
+          for i in $(seq 1 15); do
+            ss -tlnp | grep -q ':3000 ' || break
+            sleep 1
+          done
+          docker run -d \
+            --name personal-web \
+            --restart unless-stopped \
+            -p 3000:3000 \
+            -e NODE_ENV=production \
+            -e LLM_PROVIDER=openai \
+            -e LLM_MODEL=deepseek-v4-flash \
+            -e OPENAI_BASE_URL=https://api.silra.cn/v1 \
+            -e LLM_API_KEY="$LLM_API_KEY" \
+            -e SENTRY_DSN="$SENTRY_DSN_PW" \
+            -e NEXT_PUBLIC_SENTRY_DSN="$SENTRY_DSN_PW" \
+            -e SENTRY_AUTH_TOKEN="$SENTRY_AUTH_TOKEN" \
+            -e NEXT_AXIOM_TOKEN="$NEXT_AXIOM_TOKEN" \
+            -e NEXT_AXIOM_DATASET="personal-web" \
+            ghcr.io/$OWNER/personal_web:latest
+          docker image prune -f
+          sleep 3
+          curl -sf http://localhost:3000 > /dev/null && echo "live"
+          ENDSSH
