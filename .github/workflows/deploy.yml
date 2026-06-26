@@ -42,7 +42,7 @@ jobs:
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.DO_SSH_KEY }}" > ~/.ssh/deploy_key
+          printf '%s' "${{ secrets.DO_SSH_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -t ed25519 ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
 
@@ -70,6 +70,8 @@ jobs:
           docker pull ghcr.io/$OWNER/personal_web:latest
           docker stop personal-web 2>/dev/null || true
           docker rm personal-web 2>/dev/null || true
+          docker stop personal_web_web_1 2>/dev/null || true
+          docker rm personal_web_web_1 2>/dev/null || true
           fuser -k 3000/tcp 2>/dev/null || true
           for i in $(seq 1 15); do
             ss -tlnp | grep -q ':3000 ' || break
