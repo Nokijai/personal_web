@@ -4,7 +4,32 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Noki | Quantitative/AI Developer",
   description:
-    "Personal portfolio of Noki — Quantitative/AI Developer & CS Student @ CUHK",
+    "Personal portfolio of Noki (Lok Kei Chau) — Quantitative/AI Developer & CS Student @ CUHK. Building at the intersection of machine intelligence and financial markets.",
+  keywords: ["quantitative developer", "AI engineer", "CUHK", "computer science", "Hong Kong", "quant finance", "machine learning", "derivatives pricing", "full-stack developer"],
+  authors: [{ name: "Noki (Lok Kei Chau)" }],
+  openGraph: {
+    title: "Noki | Quantitative/AI Developer",
+    description:
+      "Personal portfolio of Noki — Quantitative/AI Developer & CS Student @ CUHK. Options pricing, ML, full-stack development.",
+    url: "https://worldofnoki.com",
+    siteName: "Noki",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Noki | Quantitative/AI Developer",
+    description:
+      "Building at the intersection of machine intelligence and financial markets.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  verification: {
+    // Add your Google Search Console verification ID here if you have one
+    // google: "your-verification-id",
+  },
 };
 
 export default function RootLayout({

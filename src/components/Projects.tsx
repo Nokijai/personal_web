@@ -10,6 +10,7 @@ interface Project {
   github?: string;
   live?: string;
   featured?: boolean;
+  stars?: number;
 }
 
 const featuredProjects: Project[] = [
@@ -36,7 +37,7 @@ const featuredProjects: Project[] = [
       "Team gym tracker with XP/ranking/level system — turn your workout crew into a game. Log reps, earn XP, climb the leaderboard, and keep each other accountable.",
     tags: ["Gamification", "Full-Stack", "Community"],
     github: "https://github.com/Nokijai/gymtrack",
-    live: "https://track.worldofnoki.com",
+    live: "https://gymteam.worldofnoki.com",
     featured: true,
   },
   {
@@ -45,17 +46,43 @@ const featuredProjects: Project[] = [
       "A competitive mock trading platform for CUHK students. Real-time market simulation with portfolio tracking, risk analytics, leaderboard rankings, and trade execution engine. Used by the student body for hands-on quant finance experience.",
     tags: ["Quantitative Finance", "Full-Stack", "Analytics", "Real-Time"],
     github: "https://github.com/Nokijai/CUHK-Mock-Fund-League",
+    stars: 3,
     featured: true,
   },
 ];
 
 const otherProjects: Project[] = [
   {
+    title: "Knowledge Base",
+    description:
+      "A comprehensive, searchable knowledge base with rich content management, AI-powered search, and interactive code snippets. Built for documenting and sharing technical knowledge across teams.",
+    tags: ["Documentation", "AI", "Full-Stack"],
+    github: "https://github.com/Nokijai/knowledge-base",
+    live: "https://knowledge-base.worldofnoki.com",
+  },
+  {
+    title: "Job App System",
+    description:
+      "A full-stack job application tracking system with automated status updates, resume parsing, interview scheduling, and analytics dashboards to streamline the hiring pipeline.",
+    tags: ["Full-Stack", "Automation", "Analytics"],
+    github: "https://github.com/Nokijai/job-app-system",
+    live: "https://jobs.worldofnoki.com",
+  },
+  {
+    title: "Dashboard",
+    description:
+      "A centralised monitoring dashboard aggregating metrics from multiple services — real-time status, performance charts, logs, and alerts in one unified view.",
+    tags: ["Monitoring", "Full-Stack", "Real-Time"],
+    github: "https://github.com/Nokijai/worldofnoki-dashboard",
+    live: "https://dashboard.worldofnoki.com",
+  },
+  {
     title: "Quant & SWE Knowledge Base",
     description:
       "A curated repository of quantitative finance and software engineering knowledge — algorithms, market microstructure, ML strategies, system design patterns, and interview prep. Your launchpad for quant/SWE interviews.",
     tags: ["Knowledge Base", "Quant", "AI/ML", "SWE"],
     github: "https://github.com/Nokijai/Quant-and-SWE-knowledge-Base",
+    stars: 1,
   },
   {
     title: "MTR Arrival Time Bot",
@@ -70,6 +97,7 @@ const otherProjects: Project[] = [
       "Course planning and timetable tool for CUHK students. Drag-and-drop scheduling with prerequisite validation.",
     tags: ["Web App", "Education"],
     github: "https://github.com/Nokijai/CU_Course_Planner",
+    stars: 1,
   },
   {
     title: "Real-Time Collaborative Editor",
@@ -77,13 +105,6 @@ const otherProjects: Project[] = [
       "A WebSocket-powered collaborative code/text editor with operational transform concurrency.",
     tags: ["WebSocket", "Collaboration", "Real-Time"],
     github: "https://github.com/Nokijai/real_time_editor",
-  },
-  {
-    title: "GAN Human Image Generation",
-    description:
-      "Generative adversarial network for high-fidelity human face synthesis. Trained on CelebA with progressive growing.",
-    tags: ["Deep Learning", "GAN", "Computer Vision"],
-    github: "https://github.com/Nokijai/GAN_human_image_generation",
   },
 ];
 
@@ -152,6 +173,14 @@ function ProjectCard({
               </svg>
             </a>
           )}
+          {project.stars !== undefined && (
+            <span className="text-xs text-gray-500 flex items-center gap-1">
+              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              {project.stars}
+            </span>
+          )}
         </div>
       </div>
 
@@ -211,7 +240,7 @@ export default function Projects() {
           transition={{ delay: 0.4 }}
           className="text-xl font-semibold text-gray-300 mb-6"
         >
-          Other Notable Projects
+          More Projects
         </motion.h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {otherProjects.map((project, i) => (
