@@ -3,47 +3,85 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
-const featuredProjects = [
+interface Project {
+  title: string;
+  description: string;
+  tags: string[];
+  github?: string;
+  live?: string;
+  featured?: boolean;
+}
+
+const featuredProjects: Project[] = [
   {
-    title: "CUHK Mock Fund League",
+    title: "Options Pricing Engine",
     description:
-      "A competitive mock trading platform for CUHK students. Simulates real market conditions with portfolio tracking, performance analytics, and leaderboard rankings.",
-    tags: ["Quantitative Finance", "Full-Stack", "Analytics"],
-    github: "https://github.com/Nokijai/CUHK-Mock-Fund-League",
+      "A comprehensive derivatives pricing dashboard featuring Black-Scholes, Monte Carlo simulation, Greeks visualisation, an implied volatility solver, and a live AAPL volatility surface. Built with Streamlit, NumPy/SciPy, and yfinance.",
+    tags: ["Quantitative Finance", "Derivatives", "Streamlit", "Python"],
+    github: "https://github.com/Nokijai/options-pricing",
     featured: true,
   },
   {
-    title: "Quant & SWE Knowledge Base",
+    title: "Stock Market Tracker",
     description:
-      "A curated repository of quantitative finance and software engineering knowledge — covering algorithms, market microstructure, ML strategies, and system design patterns.",
-    tags: ["Knowledge Base", "Quant", "AI/ML"],
-    github: "https://github.com/Nokijai/Quant-and-SWE-knowledge-Base",
+      "Real-time portfolio tracker with AI-generated market news summaries. Monitor positions, P&L, and get daily briefing digests powered by LLM summarisation of market-moving events.",
+    tags: ["Finance", "AI", "Full-Stack", "Portfolio"],
+    github: "https://github.com/Nokijai/stock-market-tracker",
+    live: "https://stock.worldofnoki.com",
+    featured: true,
+  },
+  {
+    title: "GymTrack",
+    description:
+      "Team gym tracker with XP/ranking/level system — turn your workout crew into a game. Log reps, earn XP, climb the leaderboard, and keep each other accountable.",
+    tags: ["Gamification", "Full-Stack", "Community"],
+    github: "https://github.com/Nokijai/gymtrack",
+    live: "https://track.worldofnoki.com",
+    featured: true,
+  },
+  {
+    title: "CUHK Mock Fund League",
+    description:
+      "A competitive mock trading platform for CUHK students. Real-time market simulation with portfolio tracking, risk analytics, leaderboard rankings, and trade execution engine. Used by the student body for hands-on quant finance experience.",
+    tags: ["Quantitative Finance", "Full-Stack", "Analytics", "Real-Time"],
+    github: "https://github.com/Nokijai/CUHK-Mock-Fund-League",
     featured: true,
   },
 ];
 
-const otherProjects = [
+const otherProjects: Project[] = [
+  {
+    title: "Quant & SWE Knowledge Base",
+    description:
+      "A curated repository of quantitative finance and software engineering knowledge — algorithms, market microstructure, ML strategies, system design patterns, and interview prep. Your launchpad for quant/SWE interviews.",
+    tags: ["Knowledge Base", "Quant", "AI/ML", "SWE"],
+    github: "https://github.com/Nokijai/Quant-and-SWE-knowledge-Base",
+  },
   {
     title: "MTR Arrival Time Bot",
-    description: "Telegram bot showing real-time Hong Kong MTR arrival times.",
+    description:
+      "Telegram bot serving real-time Hong Kong MTR arrival times. Used by hundreds of daily commuters.",
     tags: ["Bot", "API", "Python"],
     github: "https://github.com/Nokijai/mtr_arrivaltime_bot",
   },
   {
     title: "CU Course Planner",
-    description: "Course planning tool for CUHK students.",
+    description:
+      "Course planning and timetable tool for CUHK students. Drag-and-drop scheduling with prerequisite validation.",
     tags: ["Web App", "Education"],
     github: "https://github.com/Nokijai/CU_Course_Planner",
   },
   {
-    title: "Real-Time Editor",
-    description: "Collaborative real-time code/text editor.",
-    tags: ["WebSocket", "Collaboration"],
+    title: "Real-Time Collaborative Editor",
+    description:
+      "A WebSocket-powered collaborative code/text editor with operational transform concurrency.",
+    tags: ["WebSocket", "Collaboration", "Real-Time"],
     github: "https://github.com/Nokijai/real_time_editor",
   },
   {
     title: "GAN Human Image Generation",
-    description: "Generative adversarial network for human image synthesis.",
+    description:
+      "Generative adversarial network for high-fidelity human face synthesis. Trained on CelebA with progressive growing.",
     tags: ["Deep Learning", "GAN", "Computer Vision"],
     github: "https://github.com/Nokijai/GAN_human_image_generation",
   },
@@ -54,7 +92,7 @@ function ProjectCard({
   index,
   featured = false,
 }: {
-  project: { title: string; description: string; tags: string[]; github: string; featured?: boolean };
+  project: Project;
   index: number;
   featured?: boolean;
 }) {
@@ -87,16 +125,34 @@ function ProjectCard({
             />
           </svg>
         </div>
-        <a
-          href={project.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-gray-500 hover:text-accent-glow transition-colors"
-        >
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-          </svg>
-        </a>
+        <div className="flex gap-2">
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-accent-glow transition-colors"
+              title="Live site"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          )}
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-accent-glow transition-colors"
+              title="GitHub repository"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+              </svg>
+            </a>
+          )}
+        </div>
       </div>
 
       <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-accent-glow transition-colors">
@@ -137,7 +193,7 @@ export default function Projects() {
           </h2>
           <div className="w-20 h-1 bg-accent-primary rounded-full mb-4" />
           <p className="text-gray-400 mb-12 text-lg">
-            Featured work from my GitHub
+            Featured work from GitHub & live web apps
           </p>
         </motion.div>
 
@@ -157,9 +213,9 @@ export default function Projects() {
         >
           Other Notable Projects
         </motion.h3>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {otherProjects.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i + 2} />
+            <ProjectCard key={project.title} project={project} index={i + 4} />
           ))}
         </div>
 

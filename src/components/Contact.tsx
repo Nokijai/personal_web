@@ -21,8 +21,7 @@ export default function Contact() {
           <div className="w-20 h-1 bg-accent-primary rounded-full mb-8 mx-auto" />
 
           <p className="text-gray-400 text-lg mb-10 max-w-xl mx-auto">
-            I&apos;m always open to new opportunities, collaborations, or just a
-            chat about quant, AI, or tech in general.
+            Open to 2027 new grad roles, quant/AI internships, and interesting collaborations. If you&apos;re building something at the intersection of finance and machine learning — or just want to talk markets, models, or systems — I&apos;d love to hear from you.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -39,7 +38,7 @@ export default function Contact() {
             </a>
 
             <a
-              href="mailto:hello@worldofnoki.com"
+              href="mailto:noki@worldofnoki.com"
               className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-accent-primary hover:bg-accent-secondary transition-all duration-300 text-white font-medium hover-glow"
             >
               <svg
@@ -55,7 +54,7 @@ export default function Contact() {
                   d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                 />
               </svg>
-              <span>Say Hello</span>
+              <span>Say Hello →</span>
             </a>
           </div>
         </motion.div>

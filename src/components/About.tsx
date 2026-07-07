@@ -23,24 +23,16 @@ export default function About() {
 
           <div className="glass-card p-8 md:p-12">
             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              I&apos;m a Computer Science student at{" "}
-              <span className="text-white font-medium">
-                The Chinese University of Hong Kong (CUHK)
-              </span>
-              , passionate about the intersection of{" "}
-              <span className="text-accent-glow">quantitative finance</span> and{" "}
-              <span className="text-accent-glow">artificial intelligence</span>.
+              I&apos;m a Year 4 Computer Science student at CUHK (graduating July 2027) who lives at the intersection of quantitative finance and artificial intelligence.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed mb-6">
-              I build systems that leverage machine learning and statistical methods
-              to analyze markets, develop trading strategies, and solve complex
-              engineering problems. My work spans from deep learning research to
-              production-grade quantitative systems.
+              I design and build production-grade systems that blend machine learning, statistical modeling, and financial engineering — from derivatives pricing engines with live volatility surfaces to AI-powered portfolio trackers and full-stack trading platforms.
+            </p>
+            <p className="text-gray-300 text-lg leading-relaxed mb-6">
+              My work spans deep learning research (GANs, LLMs, RAG pipelines), quantitative system architecture, and real-time data infrastructure. I&apos;ve shipped code as a GenAI Intern at HKMA, an AI Engineer at Agile Extreme Lab, and a SWE at Fortune IT.
             </p>
             <p className="text-gray-300 text-lg leading-relaxed">
-              When I&apos;m not coding, you can find me exploring new AI papers,
-              contributing to open-source projects, or tinkering with system
-              architectures.
+              When I&apos;m not building, I&apos;m reading arXiv papers, contributing to open-source, or geeking out over market microstructure and derivatives modelling.
             </p>
           </div>
         </motion.div>
